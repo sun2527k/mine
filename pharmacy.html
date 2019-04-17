@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+ <head>
+   <title>Mine-Pharmacy</title>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="css/style.css"/>
+   <script src=" js/jquery.min.js"></script>
+   <script src="js/jquery-ui.min.js"></script>
+   <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+   <script src="js/moment.min.js"></script>
+   <script src="js/fullcalendar.min.js"></script>
+   <link rel="stylesheet" href="css/fullcalendar.min.css"/>
+   <script>
+    $(function(){
+     $("#datepicker").datepicker()
+    });
+    $(function(){
+     $("#accordion").accordion()
+    });
+    $(function(){
+     $("#calendar").fullCalendar()
+    });
+    $(function(){
+     $("input").chedkboxradio()
+    });
+    $(function(){
+      $("#grid2 div").css({"border":"1px solid #191970",
+                          "padding":"20px" });
+    });
+   </script>
+ </head>
+
+ <body>
+   <h1><a href="index.html">Welcome!</a></h1>
+   <ol>
+     <li><a href="musical.html">Musical</a></li>
+     <li><a href="cross-stitch.html">Cross-stitch</a></li>
+     <li><a href="quilt.html">Quilt</a></li>
+     <li><a href="pharmacy.html"  class="active">Pharmacy</a></li>
+   </ol>
+<div id=DT>
+   <h2 >1)복약표</h2>
+   <p>*버튼을 눌러 식사시간을 입력하세요!<br><br>
+   <input type="button" id="ft" value="식사시간"></p>
+   <p id="fta"></p>
+   <script>
+    var at="";
+    var nt="";
+    var pt="";
+    var st=pt+3;
+    $("#ft").click(function(){
+     do{ at= prompt("아침식사시간을 입력하세요(입력하지 않으면 오전7시로 입력됩니다)");
+       if(at==""){
+        at=7;
+       }else if(0<at && at<25){
+        at= at;
+       }else{
+        alert("0에서24 사이의 숫자를 선택하거나 확인을 누르세요");
+       }
+     }while (!(at==""||(0<at && at<25)));
+
+     do{ nt= prompt("점심식사시간을 입력하세요(입력하지 않으면 오후1시로 입력됩니다)");
+       if(nt==""){
+        nt=13;
+       }else if(0<nt && nt<25){
+        nt= nt;
+       }else{
+        alert("0에서24 사이의 숫자를 선택하거나 확인을 누르세요");
+      }
+     }while (!(nt==""||(0<nt && nt<25)));
+
+     do{ pt= prompt("저녁식사시간을 입력하세요(입력하지 않으면 오후7시로 입력됩니다)");
+      if(pt==""){
+       pt=19;
+      }else if(0<pt && pt<25){
+       pt= pt;
+      }else{
+       alert("0에서24 사이의 숫자를 선택하거나 확인을 누르세요");
+      }
+     }while (!(pt==""||(0<pt && pt<25)));
+     document.getElementById("fta").innerHTML="식사시간은"+at+"시,"+nt+"시,"+pt+"시 입니다";
+    });
+  </script>
+
+   <p>*Date: 복용시작일을 표시하세요!<br>
+   <input type="text" id="datepicker" /></p>
+
+   <p>*복용기간을 입력하세요!<br>
+   <input type="text" id="dud"/>일</p>
+
+   <div class="widget">
+    <p>*복용법</p>
+     <fieldset>
+       <legend>해당되는 것은 다 표시하세요</legend>
+       <label for="ft-1">아침</label>
+       <input type="checkbox" name="ft1" id="ft-1" onclick="mf(id,name)">
+       <label for="ft-2">점심</label>
+       <input type="checkbox" name="ft2" id="ft-2" onclick="mf(id,name)">
+       <label for="ft-3">저녁</label>
+       <input type="checkbox" name="ft3" id="ft-3" onclick="mf(id,name)">
+       <label for="ft-4">자기전</label>
+       <input type="checkbox" name="ft4" id="ft-4" onclick="mf(id,name)">
+       <label for="ft-5">시간으로입력</label>
+       <input type="checkbox" name="ft5" id="ft-5" >
+     </fieldset>
+   </div>
+
+   <p id="ft1" style="display:none">아침알람이 설정되었습니다</p>
+   <p id="ft2" style="display:none">점심알람이 설정되었습니다</p>
+   <p id="ft3" style="display:none">저녁알람이 설정되었습니다</p>
+   <p id="ft4" style="display:none">자기전알람이 설정되었습니다</p>
+
+   <p>*복용시작 시간을 입력하세요!<br>
+   <input typt="text"  id="stt"/>시</p>
+
+   <script>
+    function mf(id,name){
+      var checkBox1=document.getElementById(id);
+      var text=document.getElementById(name);
+       if(checkBox1.checked==true){
+         text.style.display="block";
+       }else{
+         text.style.display="none";
+       }
+    };
+    </script>
+    <br><br>
+    <div id="calendar"></div>
+
+  <script>
+     $('#datepicker').datepicker({
+          inline: true,
+          onSelect: function(dateText) {
+              $('#calendar').fullCalendar('gotoDate',this.value);
+              $('#calendar').fullCalendar('changeView', 'agendaWeek');
+
+          }
+     });
+
+   </script>
+ </div>
+
+ <div id=NT>
+   <h2>2)drugs</h2>
+   <div id="grid2">
+     <div><h2>닥사스</h2></div>
+     <div>roflumilast 500mcg</div>
+     <div></div>
+
+     <div><h2>자렐토20mg</h2></div>
+     <div>micrinized rivaroxaban 20mg</div>
+     <div></div>
+   </div>
+ </div>
+
+  <div id=DT>
+   <h2>3)혈당기록</h2>
+  </div>
+
+  <div id=NT>
+   <h2>4)혈압기록</h2>
+ </div>
+ </body>
+</html>

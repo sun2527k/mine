@@ -1,0 +1,22 @@
+.active{color:red;}
+
+ol{width:300px;
+  border:1px solid gray;
+  padding:20px}
+
+#DT{background-color:Papayawhip}
+#NT{background-color: aqua}
+
+#grid1{
+  display:grid;
+  grid-template-columns: 250px 250px 250px 400px ;
+}
+#grid2 {
+  display:grid;
+  grid-template-columns:350px 400px 900px;
+}
+
+#calendar2{width: 800px;
+height: 720px}
+#calendar{width: 800px;
+height: 720px}
