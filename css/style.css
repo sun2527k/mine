@@ -13,7 +13,7 @@ ol{width:300px;
 }
 #grid2 {
   display:grid;
-  grid-template-columns:350px 400px 900px;
+  grid-template-columns:300px 300px 400px;
 }
 
 #calendar2{width: 800px;
