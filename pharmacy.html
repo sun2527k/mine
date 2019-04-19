@@ -1,7 +1,7 @@
-<!doctype html>
+!doctype html>
 <html>
  <head>
-   <title>Mine-Pharmacy</title>
+   <title>Mine-ex1</title>
    <meta charset="utf-8">
    <link rel="stylesheet" href="css/style.css"/>
    <script src=" js/jquery.min.js"></script>
@@ -40,9 +40,10 @@
    </ol>
 <div id=DT>
    <h2 >1)복약표</h2>
-   <p>*버튼을 눌러 식사시간을 입력하세요!<br><br>
+
+   <p>*버튼을 눌러 식사시간을 입력하세요!
    <input type="button" id="ft" value="식사시간"></p>
-   <p id="fta"></p>
+   <p id="fta" ></p>
    <script>
     var at="";
     var nt="";
@@ -81,12 +82,41 @@
      document.getElementById("fta").innerHTML="식사시간은"+at+"시,"+nt+"시,"+pt+"시 입니다";
     });
   </script>
+   <br>
 
    <p>*Date: 복용시작일을 표시하세요!<br>
-   <input type="text" id="datepicker" /></p>
+   <input type="text" id="datepicker" /></p
+   <br><br>
 
-   <p>*복용기간을 입력하세요!<br>
-   <input type="text" id="dud"/>일</p>
+   <p>*버튼을 눌러 복용기간을 입력하세요!
+   <input type="button" id="dd" value="복용기간"/></p>
+   <p id="ht"></p>
+   <script>
+    var dud="";
+    $("#dd").click(function(){
+       do{dud = prompt("몇일분의 약인가요?");
+        if(dud>0 &&dud<366){
+          dud=dud;}
+       }while(!(dud>0 &&dud<366));
+       document.getElementById("ht").innerHTML="복용기간은 "+dud+"일 입니다";
+     });
+   </script>
+   <br>
+
+   <p>*버튼을 눌러 복용시작시간을 입력하세요!
+   <input type="button" id="stt" value="복용시작시간"/></p>
+   <p id="st"></p>
+   <script>
+    var sta="";
+    $("#stt").click(function(){
+       do{sta= prompt("복용시작시간은 몇시인가요?");
+         if(sta>0 &&sta<25){
+          sta=sta;}
+       }while(!(sta>0 &&sta<25));
+       document.getElementById("st").innerHTML="복용시작시간은 "+sta+"시 입니다";
+     });
+   </script>
+   <br>
 
    <div class="widget">
     <p>*복용법</p>
@@ -109,10 +139,6 @@
    <p id="ft2" style="display:none">점심알람이 설정되었습니다</p>
    <p id="ft3" style="display:none">저녁알람이 설정되었습니다</p>
    <p id="ft4" style="display:none">자기전알람이 설정되었습니다</p>
-
-   <p>*복용시작 시간을 입력하세요!<br>
-   <input typt="text"  id="stt"/>시</p>
-
    <script>
     function mf(id,name){
       var checkBox1=document.getElementById(id);
@@ -123,7 +149,15 @@
          text.style.display="none";
        }
     };
+
     </script>
+
+
+
+   <br><br>
+
+   <p> <input type="button" value="완료" id="cplt"/></p>
+
     <br><br>
     <div id="calendar"></div>
 
@@ -133,9 +167,20 @@
           onSelect: function(dateText) {
               $('#calendar').fullCalendar('gotoDate',this.value);
               $('#calendar').fullCalendar('changeView', 'agendaWeek');
-
           }
-     });
+      });
+  /*   $("#cplt").click(function(){
+        $("#calendar").fullCalendar({
+          editeTable:true,
+          eventLimit:true,
+          events:[
+           {title:"",
+            start:"yyyy-mm-dd//시작일+j  tt:00:00//식사시간",
+            end:"2019-04-17 13:00:00",
+            color:"red"},
+          ],
+       });
+   });*/
 
    </script>
  </div>
