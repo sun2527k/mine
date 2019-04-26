@@ -10,15 +10,60 @@
    <script src="js/moment.min.js"></script>
    <script src="js/fullcalendar.min.js"></script>
    <link rel="stylesheet" href="css/fullcalendar.min.css"/>
+   <style>
+   body {
+        margin-top: 40px;
+        text-align: left;
+        font-size: 14px;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    }
+    #wrap {
+        width: 1000px;
+        margin: 5px ;
+    }
+
+    #external-events {
+        float: left;
+        width: 100px;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        background: #eee;
+        text-align: center;
+    }
+
+    #external-events h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+    }
+
+    #external-events .fc-event {
+        margin: 10px 0;
+        cursor: pointer;
+    }
+
+    #external-events p {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+    }
+
+    #external-events p input {
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    #calendar {
+        float: right;
+        width: 800px;
+    }
+   </style>
    <script>
     $(function(){
      $("#datepicker").datepicker()
     });
     $(function(){
      $("#accordion").accordion()
-    });
-    $(function(){
-     $("#calendar").fullCalendar()
     });
     $(function(){
      $("input").chedkboxradio()
@@ -152,23 +197,142 @@
 
     </script>
 
-
-
    <br><br>
-
    <p> <input type="button" value="완료" id="cplt"/></p>
 
     <br><br>
-    <div id="calendar"></div>
+    <div id='wrap'>
+         <div id='external-events'>
+           <div id='external-events-listing'>
+             <h4>Drag하세요</h4>
+             <div class='fc-event'>아침</div>
+             <div class='fc-event'>점심</div>
+             <div class='fc-event'>저녁</div>
+             <div class='fc-event'>자기전</div>
+             <div class='fc-event'>필요시</div>
+           </div>
+           <p>
+             <input type='checkbox' id='drop-remove' checked='checked' />
+             <label for='drop-remove'>한번만 사용</label>
+           </p>
+         </div>
 
-  <script>
-     $('#datepicker').datepicker({
+      <div id='calendar'></div>
+      <div style='clear:both'></div>
+
+    <script>
+       $(document).ready(function() {
+          $('#external-events .fc-event').each(function() {
+             $(this).data('event', {
+                 title: $.trim($(this).text()),
+                 stick: true
+             });
+             $(this).draggable({
+                 zIndex: 999,
+                 revert: true,
+                 revertDuration: 0
+             });
+         });
+
+         $('#calendar').fullCalendar({
+             header: {
+                 left: 'prev,next today',
+                 center: 'title',
+                 right: 'month,agendaWeek,agendaDay'
+             },
+             editable: true,
+             droppable: true,
+             dragRevertDuration: 0,
+             drop: function() {
+                 if ($('#drop-remove').is(':checked')) {
+                     $(this).remove();
+                 }
+             },
+             eventDragStop: function( event, jsEvent, ui, view ) {
+                 if(isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
+                     $('#calendar').fullCalendar('removeEvents', event._id);
+                     var el = $( "<div class='fc-event'>" ).appendTo( '#external-events-listing' ).text( event.title );
+                     el.draggable({
+                       zIndex: 999,
+                       revert: true,
+                       revertDuration: 0
+                     });
+                     el.data('event', { title: event.title, id :event.id, stick: true });
+                 }
+             }
+         });
+
+         var isEventOverDiv = function(x, y) {
+             var external_events = $( '#external-events' );
+             var offset = external_events.offset();
+             offset.right = external_events.width() + offset.left;
+             offset.bottom = external_events.height() + offset.top;
+
+             if (x >= offset.left
+                 && y >= offset.top
+                 && x <= offset.right
+                 && y <= offset .bottom) { return true; }
+             return false;
+         }
+      });
+    </script>
+    <script>
+      var textdate="";
+      $('#datepicker').datepicker({
           inline: true,
           onSelect: function(dateText) {
               $('#calendar').fullCalendar('gotoDate',this.value);
               $('#calendar').fullCalendar('changeView', 'agendaWeek');
+          //  textdate="dateText";
           }
       });
+
+    /*
+       function mf(id,name){
+         var checkBox1=document.getElementById(id);
+         var text=document.getElementById(name);
+          if(checkBox1.checked==true){
+            text.style.display="block";
+            if(id="ft-1"){
+              for (i=0,i<dud,i++){
+               $("#calendar").fullCalendar({
+                title:"아침",
+                start:""taxtdate"+i "at":00:00",
+                end:""taxtdate"+i "at":30:00"
+               });
+              };
+            }else if(id="ft-2"){
+               for (i=0,i<dud,i++){
+                $("#calendar").fullCalendar({
+                  title:"점심",
+                  start:""taxtdate"+i "nt":00:00",
+                  end:""taxtdate"+i "nt":30:00"
+                });
+              };
+            }else if(id="ft-3"){
+               for (i=0,i<dud,i++){
+                $("#calendar").fullCalendar({
+                  title:"저녁",
+                  start:""taxtdate"+i "pt":00:00",
+                  end:""taxtdate"+i "pt":30:00"
+                });
+              };
+            }else if(id="ft-4"){
+                for (i=0,i<dud,i++){
+                $("#calendar").fullCalendar({
+                  title:"자기전",
+                  start:""taxtdate"+i "st":00:00",
+                  end:""taxtdate"+i "st":10:00"
+                });
+              };
+            }
+
+          }else{
+            text.style.display="none";
+          }
+       };
+    */
+
    </script>
  </div>
 
